@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Backend Developer Roadmap · Build Real Systems + Crack FAANG in 6 Months</title>
+<style>
+  :root{
+    --bg:#0b1020; --bg2:#121833; --card:#171f3d; --card2:#1d2750;
+    --line:#2a3566; --text:#e8ecff; --muted:#9aa6d6; --accent:#ffd23f;
+    --accent2:#4f8cff; --green:#3ddc97; --pink:#ff7eb6; --purple:#b18cff;
+    --ok:#22c55e; --shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:'Segoe UI',Roboto,system-ui,Arial,sans-serif;
+    background:radial-gradient(1200px 600px at 80% -10%,#1b2350 0%,var(--bg) 55%);
+    color:var(--text); line-height:1.55; min-height:100vh;
+  }
+  a{color:var(--accent2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  header{
+    position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+    background:rgba(11,16,32,.82);border-bottom:1px solid var(--line);
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  .top{display:flex;align-items:center;gap:16px;padding:14px 0;flex-wrap:wrap}
+  .logo{font-weight:800;font-size:20px;letter-spacing:.3px}
+  .logo span{color:var(--accent)}
+  .tabs{display:flex;gap:6px;margin-left:auto;flex-wrap:wrap}
+  .tab{
+    padding:8px 14px;border-radius:10px;border:1px solid var(--line);
+    background:var(--card);color:var(--muted);cursor:pointer;font-weight:600;font-size:14px;
+  }
+  .tab.active{background:var(--accent);color:#1a1300;border-color:var(--accent)}
+  .progress-wrap{display:flex;align-items:center;gap:10px;width:100%;padding:0 0 12px}
+  .bar{flex:1;height:10px;background:var(--card);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .bar>i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--accent2));transition:width .4s}
+  .pct{font-size:13px;color:var(--muted);min-width:120px;text-align:right}
+  .reset{font-size:12px;background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 10px;cursor:pointer}
+
+  main{padding:28px 0 80px}
+  .hero{padding:18px 0 8px}
+  .hero h1{font-size:30px;margin:0 0 6px}
+  .hero p{color:var(--muted);margin:0;max-width:820px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin:16px 0 4px;font-size:13px;color:var(--muted)}
+  .legend b{color:var(--text)}
+
+  .view{display:none}
+  .view.active{display:block}
+
+  /* roadmap rail */
+  .rail{position:relative;margin-top:26px}
+  .rail::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:3px;background:linear-gradient(var(--accent2),var(--purple));transform:translateX(-50%);opacity:.5}
+  .node{position:relative;display:flex;justify-content:center;margin:0 0 26px}
+  .card{
+    width:min(640px,100%);background:var(--card);border:1px solid var(--line);
+    border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);cursor:pointer;
+    transition:transform .15s,border-color .15s;position:relative;
+  }
+  .card:hover{transform:translateY(-2px);border-color:var(--accent2)}
+  .card.done{border-color:var(--green)}
+  .card .ph{font-size:12px;font-weight:700;letter-spacing:.6px;color:var(--accent)}
+  .card h3{margin:4px 0 6px;font-size:18px}
+  .card p{margin:0;color:var(--muted);font-size:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+  .chip{font-size:11px;background:var(--card2);border:1px solid var(--line);color:var(--muted);padding:3px 8px;border-radius:99px}
+  .badge{position:absolute;top:14px;right:14px;font-size:12px;font-weight:700;color:var(--muted)}
+  .card.done .badge{color:var(--green)}
+  .num{position:absolute;left:calc(50% - 17px);top:-14px;width:34px;height:34px;border-radius:50%;
+    background:var(--accent);color:#1a1300;display:grid;place-items:center;font-weight:800;border:3px solid var(--bg)}
+  @media(max-width:760px){.rail::before{left:18px}.node{justify-content:flex-start;padding-left:40px}.num{left:1px}}
+
+  /* generic grids */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:18px}
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .panel h3{margin:0 0 8px;font-size:16px}
+  .panel ul{margin:6px 0 0;padding-left:18px}
+  .panel li{margin:5px 0;font-size:14px;color:var(--text)}
+  .muted{color:var(--muted)}
+  .tag{display:inline-block;font-size:11px;border-radius:6px;padding:1px 6px;margin-right:6px;font-weight:700}
+  .t-vid{background:#3a1d1d;color:#ff9b9b}
+  .t-course{background:#1d2e3a;color:#8fd0ff}
+  .t-doc{background:#22321d;color:#a8e88f}
+  .t-free{background:#172a22;color:var(--green)}
+  .t-paid{background:#2a2417;color:var(--accent)}
+
+  /* month plan */
+  .month{display:flex;gap:14px;margin:14px 0;align-items:flex-start}
+  .mtag{flex:none;width:96px;font-weight:800;color:var(--accent);padding-top:14px;text-align:right}
+  .mbody{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .mbody h4{margin:0 0 8px}
+  .mbody .goal{color:var(--muted);font-size:13px;margin:-4px 0 10px}
+
+  /* modal */
+  .overlay{position:fixed;inset:0;background:rgba(4,7,18,.7);display:none;z-index:100;backdrop-filter:blur(3px)}
+  .overlay.open{display:block}
+  .modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(720px,94vw);
+    max-height:86vh;overflow:auto;background:var(--bg2);border:1px solid var(--line);border-radius:18px;
+    padding:22px;z-index:101;box-shadow:var(--shadow);display:none}
+  .modal.open{display:block}
+  .modal h2{margin:0 0 2px;font-size:22px}
+  .modal .sub{color:var(--accent);font-size:12px;font-weight:700;letter-spacing:.5px}
+  .close{position:absolute;top:14px;right:16px;background:transparent;border:0;color:var(--muted);font-size:24px;cursor:pointer}
+  .sec{margin-top:16px}
+  .sec h4{margin:0 0 8px;font-size:14px;color:var(--text);border-left:3px solid var(--accent);padding-left:8px}
+  .res{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:8px 0;font-size:14px}
+  .build{background:linear-gradient(135deg,#16223f,#1c2c52);border:1px dashed var(--accent2);border-radius:12px;padding:12px 14px;margin-top:14px}
+  .build b{color:var(--accent)}
+  .mark{margin-top:18px;display:flex;gap:10px;align-items:center}
+  .mark button{background:var(--green);color:#06251a;border:0;font-weight:800;padding:10px 16px;border-radius:10px;cursor:pointer}
+  .mark button.undo{background:var(--card2);color:var(--text);border:1px solid var(--line)}
+  footer{border-top:1px solid var(--line);color:var(--muted);font-size:13px;padding:20px 0;text-align:center}
+
+  /* topic checkboxes */
+  .topiclist{list-style:none;margin:0;padding:0}
+  .topiclist li{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);
+    border-radius:10px;padding:9px 12px;margin:7px 0;font-size:14px;cursor:pointer;user-select:none}
+  .topiclist li.checked{border-color:var(--green);color:var(--muted);text-decoration:line-through}
+  .topiclist .box{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;font-size:13px;color:#06251a;background:transparent}
+  .topiclist li.checked .box{background:var(--green);border-color:var(--green)}
+  /* resource card with thumb */
+  .res{display:flex;gap:12px;align-items:center}
+  .res .thumb{flex:none;width:96px;height:54px;border-radius:8px;object-fit:cover;border:1px solid var(--line)}
+  .res .meta{flex:1}
+
+  /* print / PDF */
+  @media print{
+    header,.tabs,.legend,.reset,.printbtn,.mark,.close,footer,.overlay,.modal{display:none !important}
+    body{background:#fff;color:#000}
+    .view{display:block !important;page-break-after:always}
+    .card,.panel,.mbody{border-color:#bbb;box-shadow:none}
+    a{color:#000}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <div class="logo">Backend<span>·</span>Roadmap</div>
+      <div class="tabs">
+        <div class="tab active" data-view="roadmap">🗺️ Build Roadmap</div>
+        <div class="tab" data-view="faang">🎯 FAANG 6-Month Plan</div>
+        <div class="tab" data-view="dsa">🧠 DSA · LLD · System Design</div>
+        <div class="tab" data-view="resources">📚 Resources</div>
+        <div class="tab" data-view="people">👤 Engineers to Follow</div>
+      </div>
+    </div>
+    <div class="progress-wrap">
+      <div class="bar"><i id="barFill"></i></div>
+      <div class="pct" id="pctText">0 / 0 topics</div>
+      <button class="reset printbtn" id="printBtn">🖨 Print / PDF</button>
+      <button class="reset" id="resetBtn">Reset progress</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <!-- ROADMAP VIEW -->
+  <section class="view active" id="view-roadmap">
+    <div class="hero">
+      <h1>Become a Backend Developer from scratch</h1>
+      <p>An interactive, sequenced path covering the full backend stack (C#/.NET, SQL &amp; PL/SQL, Kafka &amp; RabbitMQ, auth, batch jobs, integrations, DevOps, architecture). Click any node to open its topics, hand-picked resources, and a "build this" mini-project. Your progress is saved in this browser.</p>
+      <div class="legend">
+        <span><span class="tag t-vid">VIDEO</span> video/channel</span>
+        <span><span class="tag t-course">COURSE</span> course</span>
+        <span><span class="tag t-doc">DOC</span> docs/book</span>
+        <span><span class="tag t-free">FREE</span></span>
+        <span><span class="tag t-paid">PAID</span></span>
+      </div>
+    </div>
+    <div class="rail" id="rail"></div>
+  </section>
+
+  <!-- FAANG VIEW -->
+  <section class="view" id="view-faang">
+    <div class="hero">
+      <h1>Crack FAANG in 6 months — month-by-month plan</h1>
+      <p>Run this <b>in parallel</b> with the build roadmap. FAANG interviews test 4 pillars: <b>DSA</b>, <b>System Design</b>, <b>Behavioral (STAR)</b>, and <b>practical coding</b>. ~2–3 hrs/day. Adjust if you only have weekends.</p>
+    </div>
+    <div id="faangPlan"></div>
+  </section>
+
+  <!-- DSA VIEW -->
+  <section class="view" id="view-dsa">
+    <div class="hero">
+      <h1>DSA, LLD &amp; System Design playbook</h1>
+      <p>The exact topics, patterns, and resources interviewers care about — including Low-Level Design (LLD/OOD).</p>
+    </div>
+    <div class="grid" id="dsaGrid"></div>
+  </section>
+
+  <!-- RESOURCES VIEW -->
+  <section class="view" id="view-resources">
+    <div class="hero">
+      <h1>Best resources by category</h1>
+      <p>Curated from widely-respected engineers and official docs. Free first, paid where it's worth it.</p>
+    </div>
+    <div class="grid" id="resGrid"></div>
+  </section>
+
+  <!-- PEOPLE VIEW -->
+  <section class="view" id="view-people">
+    <div class="hero">
+      <h1>Engineers &amp; creators to follow</h1>
+      <p>Follow these and you'll absorb best practices passively.</p>
+    </div>
+    <div class="grid" id="peopleGrid"></div>
+  </section>
+</main>
+
+<footer class="wrap">
+  Backend Developer learning journey · Progress stored locally via <code>localStorage</code> · Open this file anytime to continue.
+</footer>
+
+<!-- modal -->
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modal">
+  <button class="close" id="closeBtn">&times;</button>
+  <div class="sub" id="mPhase"></div>
+  <h2 id="mTitle"></h2>
+  <p class="muted" id="mWhy"></p>
+  <div id="mBody"></div>
+  <div class="mark">
+    <button id="markBtn">Mark phase complete ✓</button>
+    <span class="muted" id="markHint"></span>
+  </div>
+</div>
+
+<script>
+/* ---------- DATA ---------- */
+const R = (label,type,free,url,vid)=>({label,type,free,url,vid});
+
+const phases = [
+  {id:"p0",num:0,phase:"PHASE 0",title:"Foundations",weeks:"2–3 weeks",
+   chips:["Git/GitLab","HTTP","CS basics"],
+   desc:"Tools every later phase assumes — Git, GitLab CI, HTTP, command line.",
+   why:"All 7 Frontier repos use GitLab pipelines, submodules, and HTTP-based services.",
+   topics:["Programming & CS fundamentals","Git & GitLab CI/CD","HTTP & how the web works","Command line"],
+   res:[R("freeCodeCamp — full crash courses","VIDEO",1,"https://youtube.com/@freecodecamp"),
+        R("CS50 2023 — full lecture","VIDEO",1,"https://www.youtube.com/watch?v=LfaMVlDaQ24","LfaMVlDaQ24"),
+        R("Pro Git book (Scott Chacon)","DOC",1,"https://git-scm.com/book"),
+        R("GitLab CI/CD docs","DOC",1,"https://docs.gitlab.com/ee/ci/"),
+        R("Fireship — HTTP / 100-seconds series","VIDEO",1,"https://youtube.com/@Fireship")],
+   build:"Set up a GitLab repo with a trivial CI pipeline that builds and runs tests."},
+
+  {id:"p1",num:1,phase:"PHASE 1",title:"C# & .NET Core",weeks:"4–6 weeks",
+   chips:["DI","async","Worker Services"],
+   desc:"The core backend language. OOP, interfaces, DI, async, hosted services.",
+   why:"Most backend services are interface-first with DI and long-running background workers — master these patterns.",
+   topics:["C# language","OOP + interfaces + DI","async/await + Worker Services","Configuration / Options pattern"],
+   res:[R("Microsoft Learn — C# path (official)","COURSE",1,"https://learn.microsoft.com/training/dotnet/"),
+        R("Tim Corey (IAmTimCorey) — practical .NET","VIDEO",0,"https://youtube.com/@IAmTimCorey"),
+        R("Nick Chapsas — modern idiomatic .NET","VIDEO",1,"https://youtube.com/@nickchapsas"),
+        R("MS — Dependency Injection in .NET","DOC",1,"https://learn.microsoft.com/dotnet/core/extensions/dependency-injection"),
+        R("MS — Worker Services / BackgroundService","DOC",1,"https://learn.microsoft.com/dotnet/core/extensions/workers"),
+        R("'C# in Depth' — Jon Skeet","DOC",0,"https://csharpindepth.com")],
+   build:"A Worker Service that reads layered configuration and logs a setting value chosen at runtime."},
+
+  {id:"p2",num:2,phase:"PHASE 2",title:"ASP.NET Core Web API",weeks:"3–4 weeks",
+   chips:["REST","MVC","xUnit"],
+   desc:"Build production REST APIs and MVC admin portals.",
+   why:"REST APIs are the heart of backend work — routing, middleware, validation, auth, and testing.",
+   topics:["REST API fundamentals","Controllers, middleware, filters","MVC + Razor","Testing with xUnit + Moq"],
+   res:[R("MS Learn — Build web APIs with ASP.NET Core","COURSE",1,"https://learn.microsoft.com/training/paths/build-web-api-aspnet-core/"),
+        R("Nick Chapsas — REST API best practices","VIDEO",1,"https://youtube.com/@nickchapsas"),
+        R("MS — ASP.NET Core fundamentals","DOC",1,"https://learn.microsoft.com/aspnet/core/fundamentals/"),
+        R("MS — Unit testing with xUnit","DOC",1,"https://learn.microsoft.com/dotnet/core/testing/unit-testing-with-dotnet-test")],
+   build:"A Web API with an interface-based service, JWT auth stub, and xUnit tests."},
+
+  {id:"p3",num:3,phase:"PHASE 3",title:"Oracle & PL/SQL",weeks:"4–5 weeks",
+   chips:["PL/SQL","raw ADO.NET","no ORM"],
+   desc:"Relational databases, PL/SQL packages, and raw ADO.NET data access.",
+   why:"Backend = data. Learn stored procedures, set-based SQL, dedup/merge patterns, indexing, and ADO.NET.",
+   topics:["SQL fundamentals","Oracle SQL & PL/SQL","Temp-to-Main + dedup patterns","ADO.NET with Oracle (ODP.NET)"],
+   res:[R("Mode SQL Tutorial","COURSE",1,"https://mode.com/sql-tutorial/"),
+        R("Steven Feuerstein / Oracle Dev Gym (PL/SQL)","VIDEO",1,"https://devgym.oracle.com"),
+        R("Oracle PL/SQL Language Reference","DOC",1,"https://docs.oracle.com/en/database/oracle/oracle-database/19/lnpls/"),
+        R("Use The Index, Luke! (Markus Winand)","DOC",1,"https://use-the-index-luke.com"),
+        R("Oracle ODP.NET / ManagedDataAccess docs","DOC",1,"https://docs.oracle.com/en/database/oracle/oracle-data-access-components/")],
+   build:"A PL/SQL package: load file → TEMP table → dedup → merge to main; call it from .NET via ADO.NET bind params."},
+
+  {id:"p4",num:4,phase:"PHASE 4",title:"Messaging: Kafka, RabbitMQ, IBM MQ",weeks:"4–5 weeks",
+   chips:["Kafka","RabbitMQ","IBM MQ"],
+   desc:"Event-driven backends with Kafka, RabbitMQ, and IBM MQ.",
+   why:"Asynchronous messaging powers scalable, decoupled systems — producers, consumers, retries, idempotency.",
+   topics:["Messaging concepts","Apache Kafka","RabbitMQ (AMQP)","IBM MQ"],
+   res:[R("Hussein Nasser — messaging/backend deep dives","VIDEO",1,"https://youtube.com/@hnasser"),
+        R("Confluent Developer — free Kafka courses","COURSE",1,"https://developer.confluent.io/courses/"),
+        R("Stephane Maarek — Apache Kafka Series","COURSE",0,"https://www.udemy.com/user/stephane-maarek/"),
+        R("RabbitMQ official .NET tutorials","DOC",1,"https://www.rabbitmq.com/tutorials"),
+        R("IBM MQ documentation + .NET client","DOC",1,"https://www.ibm.com/docs/en/ibm-mq")],
+   build:"A Kafka consumer that deserializes JSON, writes to a database, and backs up failed messages to a folder."},
+
+  {id:"p5",num:5,phase:"PHASE 5",title:"Frontend Awareness (optional)",weeks:"3–4 weeks",
+   chips:["TypeScript","SPA basics","API consumption"],
+   desc:"Enough frontend to build admin UIs and understand how clients consume your APIs.",
+   why:"Backend devs benefit from knowing how SPAs call APIs — auth headers, CORS, pagination, error contracts.",
+   topics:["TypeScript","A SPA framework (Angular/React) basics","Consuming REST APIs from a client","Auth interceptors & route guards"],
+   res:[R("TypeScript Handbook (official)","DOC",1,"https://www.typescriptlang.org/docs/handbook/"),
+        R("Maximilian Schwarzmüller — Angular Complete Guide","COURSE",0,"https://www.udemy.com/course/the-complete-guide-to-angular-2/"),
+        R("The Net Ninja / Academind — frontend playlists","VIDEO",1,"https://youtube.com/@NetNinja"),
+        R("Fireship — frontend frameworks in 100s","VIDEO",1,"https://youtube.com/@Fireship")],
+   build:"A small SPA screen with a data table, create/edit dialogs, a route guard, and a JWT HTTP interceptor calling your Phase 2 API."},
+
+  {id:"p6",num:6,phase:"PHASE 6",title:"Security, Auth & Secrets",weeks:"1–2 weeks",
+   chips:["OAuth2/OIDC","JWT","Vault"],
+   desc:"Wire OAuth2/OIDC and vault-based secrets across the stack.",
+   why:"Every backend needs auth (JWT bearer + scopes) and safe secret management instead of hard-coded keys.",
+   topics:["OAuth2 / OIDC / JWT","ASP.NET Core auth","HashiCorp Vault","Secret management concepts"],
+   res:[R("OktaDev / Nate Barbettini — OAuth2 & OIDC in plain English","VIDEO",1,"https://youtube.com/@OktaDev"),
+        R("OAuth 2.0 Simplified (Aaron Parecki)","DOC",1,"https://www.oauth.com"),
+        R("MS — JWT bearer auth in ASP.NET Core","DOC",1,"https://learn.microsoft.com/aspnet/core/security/authentication/"),
+        R("HashiCorp Vault — Getting Started","DOC",1,"https://developer.hashicorp.com/vault/tutorials")],
+   build:"Protect your API with JWT bearer + scope check, and load a secret from a Vault dev server."},
+
+  {id:"p7",num:7,phase:"PHASE 7",title:"Batch Processing & Scheduling",weeks:"2 weeks",
+   chips:["CLI runner","Quartz","cron"],
+   desc:"Build CLI job runners and scheduled background services.",
+   why:"Backends run cron/file-load/ETL jobs — learn CLI runners, scheduling, and reliable long-running services.",
+   topics:["Worker/scheduled jobs","Quartz.NET","System.CommandLine CLI"],
+   res:[R("Nick Chapsas / Tim Corey — Worker & scheduled jobs","VIDEO",1,"https://youtube.com/@nickchapsas"),
+        R("Quartz.NET docs","DOC",1,"https://www.quartz-scheduler.net"),
+        R("MS — System.CommandLine","DOC",1,"https://learn.microsoft.com/dotnet/standard/commandline/")],
+   build:"A CLI runner that accepts a JOB name, resolves a job via DI, runs a file-load, and logs to a DB table."},
+
+  {id:"p8",num:8,phase:"PHASE 8",title:"Integration Engineering",weeks:"2–3 weeks",
+   chips:["REST clients","files/SMB","EBS links"],
+   desc:"Integrate with external REST APIs, file feeds, and other databases.",
+   why:"Real backends talk to many systems — resilient HTTP clients, retries/circuit breakers, file parsing, DB links.",
+   topics:["Resilient HTTP (HttpClientFactory + Polly)","File integrations (CsvHelper)","Cross-database links & imports"],
+   res:[R("MS — HttpClientFactory + Polly","DOC",1,"https://learn.microsoft.com/aspnet/core/fundamentals/http-requests"),
+        R("Nick Chapsas — resilient HTTP with Polly","VIDEO",1,"https://youtube.com/@nickchapsas"),
+        R("CsvHelper docs","DOC",1,"https://joshclose.github.io/CsvHelper/"),
+        R("Oracle — Database Links","DOC",1,"https://docs.oracle.com/en/database/oracle/oracle-database/19/admin/")],
+   build:"A Polly-resilient REST client calling a mock external endpoint, with fallback logging on failure."},
+
+  {id:"p9",num:9,phase:"PHASE 9",title:"DevOps, CI/CD & Cloud",weeks:"2–3 weeks",
+   chips:["GitLab CI","Docker","Cloud Foundry"],
+   desc:"Ship services via CI/CD to containers / cloud platforms.",
+   why:"Backend devs own deployment — pipelines, containers, and cloud runtimes are part of the job.",
+   topics:["GitLab CI/CD","Docker","Cloud Foundry / PCF"],
+   res:[R("TechWorld with Nana — DevOps/CI-CD/Docker/K8s","VIDEO",1,"https://youtube.com/@TechWorldwithNana"),
+        R("GitLab CI/CD docs","DOC",1,"https://docs.gitlab.com/ee/ci/"),
+        R("Docker — Get Started","DOC",1,"https://docs.docker.com/get-started/"),
+        R("Cloud Foundry docs","DOC",1,"https://docs.cloudfoundry.org")],
+   build:"A .gitlab-ci.yml that builds, tests, and produces a container image for your Phase 2 API."},
+
+  {id:"p10",num:10,phase:"PHASE 10",title:"Architecture, Design & Capstone",weeks:"ongoing",
+   chips:["System design","DDD","Capstone"],
+   desc:"Tie it all together: design data-intensive, message-driven systems at scale.",
+   why:"Senior backend work is about architecture — layering, DDD, scalability, and resilient design decisions.",
+   topics:["Software architecture & system design","Domain-Driven Design","Low-Level Design (OOD)","Capstone vertical slice"],
+   res:[R("ByteByteGo (Alex Xu) — system design","VIDEO",1,"https://youtube.com/@ByteByteGo"),
+        R("Hussein Nasser — backend architecture","VIDEO",1,"https://youtube.com/@hnasser"),
+        R("'Designing Data-Intensive Applications' — Kleppmann","DOC",0,"https://dataintensive.net"),
+        R("CodeOpinion (Derek Comartin) — DDD + messaging in .NET","VIDEO",1,"https://youtube.com/@CodeOpinion"),
+        R("'Clean Architecture' — Robert C. Martin","DOC",0,"https://www.oreilly.com/library/view/clean-architecture/9780134494272/")],
+   build:"CAPSTONE: ingest an event via Kafka → apply business rules → persist to a database → expose via REST API → trigger a downstream RabbitMQ message. One slice exercises every phase."}
+];
+
+const faang = [
+  {m:"Month 1",goal:"Foundations + DSA arrays/strings/hashing. Start build Phase 0–1.",
+   items:["DSA: arrays, strings, hashmaps, two pointers, sliding window","Pattern-based study via NeetCode 150 (start)","Build roadmap: Phase 0 + begin Phase 1 (C#)","Set up LeetCode + a tracking sheet; 2 easy/day → 1 medium/day","Behavioral: draft 6 STAR stories from past work"]},
+  {m:"Month 2",goal:"Trees, recursion, stacks/queues. Build Phase 1–2.",
+   items:["DSA: linked lists, stacks, queues, recursion, binary trees, BFS/DFS","NeetCode 150: continue (~50% done)","Build roadmap: finish C#, start ASP.NET Core Web API","Start light system-design reading (ByteByteGo basics)","Mock interview #1 (peer or Pramp)"]},
+  {m:"Month 3",goal:"Graphs, heaps, intervals. Build Phase 3 (SQL/PL-SQL).",
+   items:["DSA: heaps/priority queue, graphs, intervals, greedy","NeetCode 150: ~80% done","Build roadmap: Oracle + SQL (huge for FAANG SQL rounds too)","System design: load balancing, caching, DB scaling","Mock interview #2 (focus DSA mediums)"]},
+  {m:"Month 4",goal:"DP + advanced + start LLD. Build Phase 4 (messaging).",
+   items:["DSA: dynamic programming (1D/2D), backtracking, tries","Finish NeetCode 150; start Blind 75 timed reviews","LLD: OOP pillars + SOLID; first 2 design problems","Build roadmap: Kafka/RabbitMQ — directly fuels SD answers","Mock interview #3 (1 DSA + 1 SD)"]},
+  {m:"Month 5",goal:"System design + LLD depth. Build Phase 5–7.",
+   items:["System design (HLD): Twitter / URL-shortener / notification / rate-limiter","LLD/OOD: SOLID + design patterns; solve Parking Lot, Splitwise, LRU cache","DSA: timed mixed sets, revisit weak patterns","Build roadmap: auth + batch jobs (+ optional SPA)","Mock interview #4 + #5 (full loop incl. 1 LLD round)"]},
+  {m:"Month 6",goal:"Polish, mocks, applications. Build Phase 8–10 + Capstone.",
+   items:["Daily: 2 mediums + 1 timed SD problem","Capstone vertical slice = your portfolio + SD talking point","2–3 full mock loops/week (DSA + SD + behavioral)","Resume + LinkedIn + referrals; start applying","Company-specific prep (review tagged company questions)"]}
+];
+
+const dsa = [
+  {h:"Core DSA topics (in order)",items:["Arrays & Hashing","Two Pointers","Sliding Window","Stack","Binary Search","Linked List","Trees + BFS/DFS","Tries","Heap / Priority Queue","Backtracking","Graphs","Dynamic Programming (1D/2D)","Greedy","Intervals","Bit Manipulation"]},
+  {h:"Problem sets",items:["NeetCode 150 — curated + video solutions","Blind 75 — the classic must-do list","LeetCode Top Interview 150","Grind 75 (customizable schedule)"]},
+  {h:"DSA resources",items:["🎥 NeetCode — youtube.com/@NeetCode (best free explanations)","🎥 Abdul Bari — algorithms theory","📖 'Cracking the Coding Interview' — Gayle Laakmann McDowell","🎓 AlgoExpert (paid) — structured 160+ problems","🧠 LeetCode + Pramp/interviewing.io for mocks"]},
+  {h:"System Design (HLD)",items:["🎥 ByteByteGo (Alex Xu) — youtube.com/@ByteByteGo","🎥 Hussein Nasser — backend internals","🎥 Gaurav Sen — youtube.com/@gkcs (system design)","📖 'System Design Interview' Vol 1 & 2 — Alex Xu","📖 'Designing Data-Intensive Applications' — Kleppmann","🆓 github.com/donnemartin/system-design-primer"]},
+  {h:"Low-Level Design / OOD (LLD)",items:["📐 OOP pillars: encapsulation, abstraction, inheritance, polymorphism","📐 SOLID principles + DRY/KISS/YAGNI","📐 Design patterns: Strategy, Factory, Observer, Decorator, Singleton, Adapter, Builder","📐 UML basics: class & sequence diagrams","📐 Concurrency-safe design + clean API surfaces"]},
+  {h:"LLD practice problems",items:["Parking Lot · Elevator system · Vending machine","BookMyShow / movie booking · Splitwise","Rate limiter · Logging framework · Notification service","Tic-Tac-Toe / Chess · In-memory key-value store","Cache (LRU/LFU) · File system · Snake & Ladder"]},
+  {h:"LLD resources",items:["🆓 github.com/ashishps1/awesome-low-level-design (curated problems + solutions)","🎥 Concept && Coding (Shrayansh Jain) — youtube.com/@ConceptandCoding (best free LLD)","🎥 Gaurav Sen / InterviewReady — OOD & design","📖 'Head First Design Patterns' — Freeman & Robson","📖 refactoring.guru — design patterns + refactoring (free)","🎓 educative.io — 'Grokking the Low Level Design Interview' / 'OOD Interview'"]},
+  {h:"Behavioral (don't skip)",items:["STAR method: Situation, Task, Action, Result","Prepare 8–10 stories covering conflict, failure, leadership, impact","Amazon Leadership Principles (even for non-Amazon, great framework)","🎥 Dan Croitor — behavioral interview channel"]},
+  {h:"Mock interviews",items:["Pramp (free peer mocks)","interviewing.io (anonymous, with real engineers)","Schedule 1–2/week from Month 2 onward","Record yourself; review communication, not just correctness"]}
+];
+
+const resources = [
+  {h:".NET / C#",items:[
+    "🎥 Nick Chapsas — youtube.com/@nickchapsas",
+    "🎥 Tim Corey — youtube.com/@IAmTimCorey",
+    "🎥 CodeOpinion (Derek Comartin) — DDD + messaging",
+    "🎓 Microsoft Learn — learn.microsoft.com/training/dotnet",
+    "📖 'C# in Depth' — Jon Skeet"]},
+  {h:"Angular / Frontend",items:[
+    "🎓 Maximilian Schwarzmüller — Angular Complete Guide (Udemy)",
+    "🎥 Joshua Morony — youtube.com/@JoshuaMorony",
+    "🎥 The Net Ninja / Academind",
+    "📖 Angular v14 docs + Material docs",
+    "📖 learnrxjs.io"]},
+  {h:"Databases / SQL / PL-SQL",items:[
+    "🎓 Mode SQL Tutorial — mode.com/sql-tutorial",
+    "🎥 Steven Feuerstein / Oracle Dev Gym",
+    "📖 Use The Index, Luke! (Markus Winand)",
+    "📖 'Oracle PL/SQL Programming' — Feuerstein"]},
+  {h:"Messaging / Streaming",items:[
+    "🎓 Confluent Developer (free Kafka)",
+    "🎓 Stephane Maarek — Kafka Series (Udemy)",
+    "📖 RabbitMQ .NET tutorials",
+    "🎥 Hussein Nasser — messaging deep dives"]},
+  {h:"DevOps / Cloud",items:[
+    "🎥 TechWorld with Nana — youtube.com/@TechWorldwithNana",
+    "📖 GitLab CI/CD docs",
+    "📖 Docker Get Started",
+    "📖 Cloud Foundry docs"]},
+  {h:"Architecture / System Design",items:[
+    "🎥 ByteByteGo — youtube.com/@ByteByteGo",
+    "📖 'Designing Data-Intensive Applications' — Kleppmann",
+    "📖 'Clean Architecture' — Robert C. Martin",
+    "🆓 system-design-primer (GitHub)"]},
+  {h:"Interview Prep",items:[
+    "🎥 NeetCode — youtube.com/@NeetCode",
+    "📖 'Cracking the Coding Interview' — McDowell",
+    "🧠 LeetCode · Pramp · interviewing.io",
+    "🎓 AlgoExpert (optional, paid)"]},
+  {h:"Quick concept refreshers",items:[
+    "🎥 Fireship — youtube.com/@Fireship",
+    "🎥 freeCodeCamp — youtube.com/@freecodecamp",
+    "📖 MDN Web Docs"]}
+];
+
+const people = [
+  {h:"Nick Chapsas",items:["Modern .NET / C#, performance, DI","youtube.com/@nickchapsas"]},
+  {h:"Tim Corey",items:["Practical .NET (beginner → pro)","youtube.com/@IAmTimCorey"]},
+  {h:"Derek Comartin (CodeOpinion)",items:[".NET messaging, DDD, event-driven","youtube.com/@CodeOpinion"]},
+  {h:"Hussein Nasser",items:["Backend, databases, networking, messaging","youtube.com/@hnasser"]},
+  {h:"Alex Xu (ByteByteGo)",items:["System design, clear diagrams","youtube.com/@ByteByteGo"]},
+  {h:"Gaurav Sen",items:["System design + OOD","youtube.com/@gkcs"]},
+  {h:"Shrayansh Jain (Concept && Coding)",items:["Best free Low-Level Design (LLD)","youtube.com/@ConceptandCoding"]},
+  {h:"Stephane Maarek",items:["Kafka & AWS authority","Udemy"]},
+  {h:"Maximilian Schwarzmüller",items:["Angular, web dev","Udemy / @academind"]},
+  {h:"Joshua Morony",items:["Modern Angular & RxJS","youtube.com/@JoshuaMorony"]},
+  {h:"Steven Feuerstein",items:["The PL/SQL authority","Oracle Dev Gym"]},
+  {h:"Markus Winand",items:["SQL performance / indexing","use-the-index-luke.com"]},
+  {h:"Nana (TechWorld with Nana)",items:["DevOps, Docker, K8s, CI/CD","youtube.com/@TechWorldwithNana"]},
+  {h:"NeetCode",items:["DSA interview prep","youtube.com/@NeetCode"]},
+  {h:"Jeff Delaney (Fireship)",items:["Fast concept refreshers","youtube.com/@Fireship"]},
+  {h:"Nate Barbettini (OktaDev)",items:["OAuth2 / OIDC explained","youtube.com/@OktaDev"]}
+];
+
+/* ---------- STATE ---------- */
+const KEY="frontier_roadmap_progress_v1";
+let done = JSON.parse(localStorage.getItem(KEY) || "{}");
+function save(){localStorage.setItem(KEY,JSON.stringify(done))}
+
+/* ---------- HELPERS ---------- */
+const rail=document.getElementById('rail');
+function tagFor(type){return type==="VIDEO"?"t-vid":type==="COURSE"?"t-course":"t-doc"}
+function topicKeys(p){return p.topics.map((_,i)=>`${p.id}#${i}`)}
+function phaseDoneCount(p){return topicKeys(p).filter(k=>done[k]).length}
+function isPhaseDone(p){return phaseDoneCount(p)===p.topics.length}
+
+/* ---------- RENDER ROADMAP ---------- */
+function renderRail(){
+  rail.innerHTML="";
+  phases.forEach(p=>{
+    const dc=phaseDoneCount(p), tot=p.topics.length, isDone=dc===tot;
+    const node=document.createElement('div');node.className="node";
+    node.innerHTML=`
+      <div class="num">${p.num}</div>
+      <div class="card ${isDone?'done':''}" data-id="${p.id}">
+        <span class="badge">${isDone?'✓ Done':(dc>0?dc+'/'+tot+' topics':p.weeks)}</span>
+        <div class="ph">${p.phase}</div>
+        <h3>${p.title}</h3>
+        <p>${p.desc}</p>
+        <div class="chips">${p.chips.map(c=>`<span class="chip">${c}</span>`).join("")}</div>
+      </div>`;
+    node.querySelector('.card').addEventListener('click',()=>openModal(p.id));
+    rail.appendChild(node);
+  });
+}
+
+/* ---------- MODAL ---------- */
+const overlay=document.getElementById('overlay'),modal=document.getElementById('modal');
+function openModal(id){
+  const p=phases.find(x=>x.id===id);
+  document.getElementById('mPhase').textContent=`${p.phase} · ${p.weeks}`;
+  document.getElementById('mTitle').textContent=p.title;
+  document.getElementById('mWhy').innerHTML=`<b>Why for Frontier:</b> ${p.why}`;
+  const body=document.getElementById('mBody');
+  body.innerHTML=`
+    <div class="sec"><h4>Topics to learn (tick as you go)</h4>
+      <ul class="topiclist">${p.topics.map((t,i)=>{const k=`${p.id}#${i}`;const c=!!done[k];return `<li class="${c?'checked':''}" data-k="${k}"><span class="box">${c?'✓':''}</span>${t}</li>`;}).join("")}</ul>
+    </div>
+    <div class="sec"><h4>Best resources</h4>
+      ${p.res.map(r=>`<div class="res">${r.vid?`<a href="${r.url}" target="_blank" rel="noopener"><img class="thumb" src="https://img.youtube.com/vi/${r.vid}/mqdefault.jpg" alt=""></a>`:''}<div class="meta"><span class="tag ${tagFor(r.type)}">${r.type}</span><span class="tag ${r.free?'t-free':'t-paid'}">${r.free?'FREE':'PAID'}</span> <a href="${r.url}" target="_blank" rel="noopener">${r.label}</a></div></div>`).join("")}
+    </div>
+    <div class="build"><b>🛠 Build this for Frontier:</b><br>${p.build}</div>`;
+  body.querySelectorAll('.topiclist li').forEach(li=>{
+    li.onclick=()=>{const k=li.dataset.k;if(done[k]){delete done[k]}else{done[k]=true}save();
+      li.classList.toggle('checked',!!done[k]);li.querySelector('.box').textContent=done[k]?'✓':'';
+      sync();renderRail();updateProgress();};
+  });
+  const btn=document.getElementById('markBtn');
+  const hint=document.getElementById('markHint');
+  function sync(){
+    const d=isPhaseDone(p);
+    btn.textContent=d?"All topics done — reset phase":"Mark ALL topics complete ✓";
+    btn.className=d?"undo":"";
+    hint.textContent=d?"Nice work! 🎉":`${phaseDoneCount(p)} / ${p.topics.length} done`;
+  }
+  btn.onclick=()=>{const d=isPhaseDone(p);topicKeys(p).forEach(k=>{if(d){delete done[k]}else{done[k]=true}});save();
+    body.querySelectorAll('.topiclist li').forEach(li=>{const c=!!done[li.dataset.k];li.classList.toggle('checked',c);li.querySelector('.box').textContent=c?'✓':'';});
+    sync();renderRail();updateProgress();};
+  sync();
+  overlay.classList.add('open');modal.classList.add('open');
+}
+function closeModal(){overlay.classList.remove('open');modal.classList.remove('open')}
+document.getElementById('closeBtn').onclick=closeModal;
+overlay.onclick=closeModal;
+document.addEventListener('keydown',e=>{if(e.key==="Escape")closeModal()});
+
+/* ---------- PROGRESS ---------- */
+function updateProgress(){
+  const total=phases.reduce((s,p)=>s+p.topics.length,0);
+  const d=phases.reduce((s,p)=>s+phaseDoneCount(p),0);
+  const phasesDone=phases.filter(isPhaseDone).length;
+  document.getElementById('barFill').style.width=(total?d/total*100:0)+"%";
+  document.getElementById('pctText').textContent=`${d}/${total} topics · ${phasesDone}/${phases.length} phases`;
+}
+document.getElementById('resetBtn').onclick=()=>{if(confirm("Reset all progress?")){done={};save();renderRail();updateProgress();}};
+document.getElementById('printBtn').onclick=()=>window.print();
+
+/* ---------- OTHER VIEWS ---------- */
+function renderFaang(){
+  document.getElementById('faangPlan').innerHTML=faang.map(f=>`
+    <div class="month">
+      <div class="mtag">${f.m}</div>
+      <div class="mbody">
+        <div class="goal">${f.goal}</div>
+        <ul>${f.items.map(i=>`<li>${i}</li>`).join("")}</ul>
+      </div>
+    </div>`).join("");
+}
+function renderList(targetId,arr){
+  document.getElementById(targetId).innerHTML=arr.map(g=>`
+    <div class="panel"><h3>${g.h}</h3><ul>${g.items.map(i=>`<li>${i}</li>`).join("")}</ul></div>`).join("");
+}
+
+/* ---------- TABS ---------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.onclick=()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('view-'+t.dataset.view).classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+});
+
+/* ---------- INIT ---------- */
+renderRail();
+renderFaang();
+renderList('dsaGrid',dsa);
+renderList('resGrid',resources);
+renderList('peopleGrid',people);
+updateProgress();
+</script>
+</body>
+</html>
